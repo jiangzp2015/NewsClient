@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.heima.newsclient.R;
 import com.heima.newsclient.adapter.GuideAdapter;
+import com.heima.newsclient.utils.Constant;
+import com.heima.newsclient.utils.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +121,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         Toast.makeText(this, "进入主界面", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(GuideActivity.this, HomeActivity.class));
         finish();
+        PrefUtils.putBoolean(this,true, Constant.KEY_FINISH_GUIDE);
     }
 
 

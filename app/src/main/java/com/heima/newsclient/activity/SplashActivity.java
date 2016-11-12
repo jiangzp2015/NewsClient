@@ -12,6 +12,8 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 
 import com.heima.newsclient.R;
+import com.heima.newsclient.utils.Constant;
+import com.heima.newsclient.utils.PrefUtils;
 
 /**
  * Created by SparkJzp on 2016/11/11 12:54
@@ -64,13 +66,12 @@ public class SplashActivity extends Activity implements Animation.AnimationListe
     @Override
     public void onAnimationEnd(Animation animation) {
         //判断是否第一次进入
-/*        boolean isFinished = PrefUtils.getBoolean(this, Constant.KEY_GUIDDE_FINISH);
+        boolean isFinished = PrefUtils.getBoolean(this, Constant.KEY_FINISH_GUIDE);
         if (!isFinished) {
-            startActivity(new Intent(this, HomeActivity.class));
-        } else {
             startActivity(new Intent(this, GuideActivity.class));
-        }*/
-        startActivity(new Intent(this, GuideActivity.class));
+        } else {
+            startActivity(new Intent(this, HomeActivity.class));
+        }
         finish();
     }
 

@@ -38,7 +38,7 @@ public class HomeActivity extends SlidingActivity {
     private void initMenu() {
         setBehindContentView(R.layout.view_menu);
         SlidingMenu slide=getSlidingMenu();
-        slide.setBehindWidth(180);
+        slide.setBehindWidth(240);
         slide.setMode(SlidingMenu.LEFT);
         slide.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         slide.setBehindScrollScale(0.35f);
