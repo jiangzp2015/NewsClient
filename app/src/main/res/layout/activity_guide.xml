@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-<android.support.v4.view.ViewPager
-    android:id="@+id/viewpager_guide"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-</android.support.v4.view.ViewPager>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp">
+
         <LinearLayout
             android:id="@+id/ll_root"
             android:layout_width="wrap_content"
@@ -21,6 +24,7 @@
             android:orientation="horizontal"
             >
         </LinearLayout>
+
         <ImageView
             android:id="@+id/iv_point"
             android:layout_width="@dimen/point_size"
@@ -28,17 +32,18 @@
             android:src="@drawable/point_selected"
             />
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/iv_start"
-        android:visibility="gone"
-        android:src="@drawable/start_image_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="45dp"
         android:layout_marginRight="110dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:src="@drawable/start_image_selected"
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

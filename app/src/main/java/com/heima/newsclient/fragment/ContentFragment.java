@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.heima.newsclient.R;
+
 /**
  * @author SparkJzp
  * @date 2016/11/11
@@ -17,6 +19,6 @@ public class ContentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_content,null);
     }
 }

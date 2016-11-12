@@ -18,16 +18,14 @@ import com.heima.newsclient.adapter.GuideAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * @author SparkJzp
  * @date 2016/11/11
- * @describe
+ * @describe 导航页
  */
 
 public class GuideActivity extends Activity implements ViewPager.OnPageChangeListener, View.OnClickListener {
-
+    private static final String TAG="GuideActivity";
     private ViewPager mViewPager;
     private ImageView mIvPoint;
     private LinearLayout mLinearLayout;
@@ -35,7 +33,6 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
     private int mPointSize;
     private int mDx;
     private ImageView mIvStart;
-    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +58,14 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
 
     private void initPoint() {
         mPointSize = getResources().getDimensionPixelSize(R.dimen.point_size);
-        Log.d(TAG, "initPoint: mPointSize====" + mPointSize);
         for (int i = 0; i < mImages.length; i++) {
-            mImageView = new ImageView(this);
-            mImageView.setImageResource(R.drawable.point_normal);
+            ImageView iv = new ImageView(this);
+            iv.setImageResource(R.drawable.point_normal);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mPointSize, mPointSize);
             if (i != 0) {
                 params.leftMargin = mPointSize;
             }
-            mLinearLayout.addView(mImageView, params);
+            mLinearLayout.addView(iv,params);
         }
         mLinearLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -78,7 +74,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
                 mLinearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
+        Log.d(TAG, "initPoint: mPointSize====" + mPointSize);
     }
 
     /**
