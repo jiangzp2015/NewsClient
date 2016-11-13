@@ -12,12 +12,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
-import com.heima.newsclient.BaseApplication;
+import com.heima.newsclient.application.BaseApplication;
 import com.heima.newsclient.activity.HomeActivity;
 import com.heima.newsclient.control.TabController;
 import com.heima.newsclient.entity.NewsCenterBean;
 import com.heima.newsclient.fragment.MenuFragment;
-import com.heima.newsclient.utils.Constant;
+import com.heima.newsclient.global.Constant;
 
 import static com.android.volley.VolleyLog.TAG;
 

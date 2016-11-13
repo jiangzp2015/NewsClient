@@ -4,11 +4,11 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import com.heima.newsclient.BaseApplication;
+import com.heima.newsclient.application.BaseApplication;
 import com.heima.newsclient.R;
 import com.heima.newsclient.fragment.ContentFragment;
 import com.heima.newsclient.fragment.MenuFragment;
-import com.heima.newsclient.utils.Constant;
+import com.heima.newsclient.global.Constant;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 

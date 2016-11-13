@@ -9,7 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.heima.newsclient.BaseApplication;
+import com.heima.newsclient.application.BaseApplication;
 
 /**
  * @author SparkJzp

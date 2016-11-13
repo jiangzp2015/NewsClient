@@ -1,4 +1,4 @@
-package com.heima.newsclient.utils;
+package com.heima.newsclient.global;
 
 /**
  * @author SparkJzp

@@ -1,4 +1,4 @@
-package com.heima.newsclient;
+package com.heima.newsclient.application;
 
 import android.app.Application;
 import android.os.Handler;

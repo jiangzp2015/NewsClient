@@ -12,7 +12,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 
 import com.heima.newsclient.R;
-import com.heima.newsclient.utils.Constant;
+import com.heima.newsclient.global.Constant;
 import com.heima.newsclient.utils.PrefUtils;
 
 /**

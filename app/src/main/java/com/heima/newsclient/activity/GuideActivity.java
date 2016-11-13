@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.heima.newsclient.R;
 import com.heima.newsclient.adapter.GuideAdapter;
-import com.heima.newsclient.utils.Constant;
+import com.heima.newsclient.global.Constant;
 import com.heima.newsclient.utils.PrefUtils;
 
 import java.util.ArrayList;
