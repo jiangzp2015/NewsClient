@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.heima.newsclient.R;
+import com.heima.newsclient.activity.HomeActivity;
 import com.heima.newsclient.adapter.MenuAdapter;
 import com.heima.newsclient.entity.NewsCenterBean;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.List;
 
@@ -20,7 +23,7 @@ import java.util.List;
  * @describe 侧边菜单Fragment
  */
 
-public class MenuFragment extends Fragment {
+public class MenuFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private View mView;
     private ListView mLvMenu;
@@ -42,12 +45,21 @@ public class MenuFragment extends Fragment {
 
     }
     public void initListener(){
-
+        mLvMenu.setOnItemClickListener(this);
     }
 
     public void setData(List<NewsCenterBean.DataBean> list){
         mAdapter = new MenuAdapter(getActivity(),list);
         mLvMenu.setAdapter(mAdapter);
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        HomeActivity homeActivity=(HomeActivity) getActivity();
+        SlidingMenu slidingMenu = homeActivity.getSlidingMenu();
+        slidingMenu.toggle();
+        mAdapter.setSelect(position);
+        mAdapter.notifyDataSetChanged();
     }
 }

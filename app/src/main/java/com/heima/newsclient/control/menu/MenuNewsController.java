@@ -15,6 +15,8 @@ import com.heima.newsclient.control.BaseController;
 
 public class MenuNewsController extends BaseController {
 
+
+    private static final String TAG="MenuNewsController";
     public MenuNewsController(Context context) {
         super(context);
     }
@@ -32,4 +34,5 @@ public class MenuNewsController extends BaseController {
     public void initData() {
 
     }
+
 }
