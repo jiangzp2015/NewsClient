@@ -5,7 +5,7 @@ import java.security.MessageDigest;
 /**
  * @author SparkJzp
  * @date 2016/11/13
- * @describe TODO
+ * @describe MD5Encoder
  */
 
 public class MD5Encoder {

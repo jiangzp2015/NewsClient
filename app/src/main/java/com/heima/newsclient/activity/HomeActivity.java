@@ -3,12 +3,11 @@ package com.heima.newsclient.activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.heima.newsclient.application.BaseApplication;
 import com.heima.newsclient.R;
 import com.heima.newsclient.fragment.ContentFragment;
 import com.heima.newsclient.fragment.MenuFragment;
-import com.heima.newsclient.global.Constant;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
@@ -37,6 +36,8 @@ public class HomeActivity extends SlidingActivity {
         transaction.replace(R.id.fl_content, new ContentFragment(), TAG_CONTENT);
         transaction.replace(R.id.fl_menu, new MenuFragment(), TAG_MENU);
         transaction.commit();
+        long maxMemory = Runtime.getRuntime().maxMemory() / 1024;
+        Log.d(TAG, "maxMemory: "+maxMemory);
     }
 
     /**
@@ -62,9 +63,4 @@ public class HomeActivity extends SlidingActivity {
         return (ContentFragment) mFragmentManager.findFragmentByTag(TAG_CONTENT);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        BaseApplication.getHttpQueue().cancelAll(Constant.TAG_REQUEST_NEWS);
-    }
 }

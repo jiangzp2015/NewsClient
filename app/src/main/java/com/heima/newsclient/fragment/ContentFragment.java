@@ -10,12 +10,14 @@ import android.widget.RadioGroup;
 
 import com.heima.newsclient.R;
 import com.heima.newsclient.adapter.ContentAdapter;
+import com.heima.newsclient.control.BaseController;
+import com.heima.newsclient.control.TabController;
 import com.heima.newsclient.control.tab.GovController;
 import com.heima.newsclient.control.tab.HomeController;
 import com.heima.newsclient.control.tab.NewsController;
 import com.heima.newsclient.control.tab.SettingController;
 import com.heima.newsclient.control.tab.SmartServiceController;
-import com.heima.newsclient.control.TabController;
+import com.heima.newsclient.utils.UIUtils;
 import com.heima.newsclient.view.LazyViewPager;
 
 import java.util.ArrayList;
@@ -32,11 +34,13 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
     private View mView;
     private LazyViewPager mViewPagerContent;
     private RadioGroup mRgSelect;
+    private List<TabController> mList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_content, null);
+        mView= UIUtils.inflate(R.layout.fragment_content);
+//        mView = inflater.inflate(R.layout.fragment_content, null);
         initView();
         initData();
         initListener();
@@ -50,14 +54,14 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
     }
 
     public void initData() {
-        List<TabController> list = new ArrayList<>();
-        list.add(new HomeController(getActivity()));
-        list.add(new NewsController(getActivity()));
-        list.add(new SmartServiceController(getActivity()));
-        list.add(new GovController(getActivity()));
-        list.add(new SettingController(getActivity()));
+        mList = new ArrayList<>();
+        mList.add(new HomeController(getActivity()));
+        mList.add(new NewsController(getActivity()));
+        mList.add(new SmartServiceController(getActivity()));
+        mList.add(new GovController(getActivity()));
+        mList.add(new SettingController(getActivity()));
 
-        ContentAdapter adapter = new ContentAdapter(list);
+        ContentAdapter adapter = new ContentAdapter(mList);
         mViewPagerContent.setAdapter(adapter);
 
         mViewPagerContent.setOffscreenPageLimit(0);
@@ -87,5 +91,9 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 break;
 
         }
+    }
+    public void switchMenu(int position){
+        BaseController controller=mList.get(mViewPagerContent.getCurrentItem());
+        controller.setSwitchMenu(position);
     }
 }

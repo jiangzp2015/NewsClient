@@ -61,5 +61,20 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
         slidingMenu.toggle();
         mAdapter.setSelect(position);
         mAdapter.notifyDataSetChanged();
+
+/*        ContentFragment contentFragment=homeActivity.getContentFragment();
+        contentFragment.switchMenu(position);
+        */
+        if (mListener!=null){
+            mListener.onClickItem(position);
+        }
+    }
+
+    public interface onClickItemListener{
+        void onClickItem(int position);
+    }
+    onClickItemListener mListener;
+    public void setOnClickItemListener(onClickItemListener listener){
+        mListener=listener;
     }
 }

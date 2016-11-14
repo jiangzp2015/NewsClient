@@ -23,7 +23,9 @@
         </activity>
 
         <!--activity-->
-        <activity android:name=".activity.HomeActivity"></activity>
+        <activity android:name=".activity.HomeActivity"
+                  android:theme="@style/VpiStyle"
+            ></activity>
         <activity
             android:name=".activity.GuideActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>

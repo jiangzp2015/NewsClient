@@ -25,5 +25,10 @@ public abstract class BaseController {
         return mView;
     }
 
-
+    /**
+     * 那个子类需要自己调用
+     * @param position
+     */
+    public void setSwitchMenu(int position) {
+    }
 }

@@ -10,7 +10,7 @@ import com.heima.newsclient.control.BaseController;
 /**
  * @author SparkJzp
  * @date 2016/11/12
- * @describe  设置页面的控制器
+ * @describe  专题
  */
 
 public class MenuSubjectController extends BaseController {

@@ -24,12 +24,13 @@ public class NewsCenterBean {
         public String excurl;
         public String weekurl;
 
-        public class ChildBean{
-            public int id;
-            public String title;
-            public int type;
-            public String url;
-        }
+
+    }
+    public class ChildBean{
+        public int id;
+        public String title;
+        public int type;
+        public String url;
     }
 
 }

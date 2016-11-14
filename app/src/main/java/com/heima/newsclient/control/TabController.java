@@ -1,12 +1,12 @@
 package com.heima.newsclient.control;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.heima.newsclient.R;
+import com.heima.newsclient.utils.UIUtils;
 
 /**
  * @author SparkJzp
@@ -24,7 +24,8 @@ public abstract class TabController extends BaseController {
 
     @Override
     public View initView() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.controller_tab, null);
+//        View view = LayoutInflater.from(mContext).inflate(R.layout.controller_tab, null);
+        View view = UIUtils.inflate(R.layout.controller_tab);
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
         FrameLayout flContainer= (FrameLayout) view.findViewById(R.id.fl_container);
         flContainer.addView(initContentView());

@@ -5,7 +5,6 @@ package com.heima.newsclient.global;
  * @date 2016/11/11
  * @describe 存储 常量 的接口
  */
-
 public interface Constant {
 
     //服务器地址
