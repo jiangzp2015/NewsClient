@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +34,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
+
 /**
  * @author SparkJzp
  * @ate 2016/11/14
@@ -55,8 +56,9 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
     private PullToRefreshListView mLvInfo;
     private View mHeadView;
     private NewsListAdapter mAdapter;
-    private Handler mHandler=new Handler();
+    private Handler mHandler = new Handler();
     private String mUrl;
+    private PtrFrameLayout mPtrlayout;
 
     public NewsListController(Context context, NewsCenterBean.ChildBean bean) {
         super(context);
@@ -65,54 +67,31 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
 
     @Override
     public View initView() {
+        //导入的是本身这个控制器的布局
         View view = View.inflate(mContext, R.layout.controller_news_list, null);
         mLvInfo = (PullToRefreshListView) view.findViewById(R.id.lv_info);
-
-        mHeadView = View.inflate(mContext, R.layout.view_top_news_pager,null);
+        //导入顶部的viewpager
+        mHeadView = View.inflate(mContext, R.layout.view_top_news_pager, null);
         mViewPager = (TopNewsPager) mHeadView.findViewById(R.id.viewpager_top);
-
         mLlPoint = (LinearLayout) mHeadView.findViewById(R.id.ll_point);
         mTvLabel = (TextView) mHeadView.findViewById(R.id.tv_label);
-
+        //添加头部view
         mLvInfo.addHeaderView(mHeadView);
-        mLvInfo.setOnRefreshListener(this);
-        mLvInfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
- /*               System.out.println("pos:" + position);
-
-                News news = mNewsList.get(position);
-
-                // 当前点击的item的标题颜色置灰
-                TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
-                tvTitle.setTextColor(Color.GRAY);
-
-                // 将已读状态持久化到本地
-                // key: read_ids; value: 1324,1325,1326
-                String readIds = PrefUtils.getString("read_ids", "", mActivity);
-                if (!readIds.contains(news.id)) {// 以前没有添加过,才添加进来
-                    readIds = readIds + news.id + ",";// 1324,1325,
-                    PrefUtils.putString("read_ids", readIds, mActivity);
-                }
-
-                // 跳到详情页
-                Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-                intent.putExtra("url", news.url);
-                mActivity.startActivity(intent);*/
-            }
-        });
 
         mViewPager.addOnPageChangeListener(this);
         mViewPager.setOnTouchListener(this);
+        mLvInfo.setOnRefreshListener(this);
+
         return view;
     }
 
     @Override
     public void initData() {
         //初次上来马上就去设置适配器，但是这个集合是空的。
-        List<NewsListBean.DataBean.NewsBean> list  = new ArrayList<>();
-        mAdapter = new NewsListAdapter(mContext ,list );
+        List<NewsListBean.DataBean.NewsBean> list = new ArrayList<>();
+        mAdapter = new NewsListAdapter(mContext, list);
         mLvInfo.setAdapter(mAdapter);
+
         getDataFromServer();
     }
 
@@ -128,16 +107,21 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
                     Log.d(TAG, "onResponse: 请求成功" + response);
                     Gson gson = new Gson();
                     mNewsListBean = gson.fromJson(response, NewsListBean.class);
+                    //设置数据
                     performTopNewsData();
+                    //动态添加小圆点
                     performAddPoint();
+                    //开始自动切换图片
                     autoSwitch();
+                    //设置适配器
                     setAdapter();
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            //通知ListView 刷新完成了
                             mLvInfo.onRefreshComplete(true);
                         }
-                    },1200);
+                    }, 1200);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -158,7 +142,7 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
      */
     protected void getMoreDataFromServer() {
 
-
+        Toast.makeText(mContext, "加载更多数据", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -193,7 +177,9 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
         }
     }
 
-    //设置顶部数据
+    /**
+     *该方法适用于设置顶部的图片数据
+     */
     private void performTopNewsData() {
 
         List<ImageView> list = new ArrayList<>();
@@ -202,7 +188,7 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
             ImageView imageView = new ImageView(mContext);
             list.add(imageView);
         }
-        TopNewAdapter adapter = new TopNewAdapter(list, topNews,mContext);
+        TopNewAdapter adapter = new TopNewAdapter(list, topNews, mContext);
         mViewPager.setAdapter(adapter);
         mTvLabel.setText(topNews.get(0).getTitle());
     }
@@ -227,6 +213,23 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
             // 关闭侧边栏
             setSlidingMenuEnable(false);
         }
+
+    }
+    /**
+     * 设置侧边栏可用不可用
+     *
+     * @param enable
+     */
+    private void setSlidingMenuEnable(boolean enable) {
+        HomeActivity mainUI = (HomeActivity) mContext;
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+
+        if (enable) {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            // 禁用掉侧边栏滑动效果
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
     }
 
     @Override
@@ -242,7 +245,7 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
         if (mAutoTask == null) {
             mAutoTask = new AutoSwitchImage();
         }
-            mAutoTask.start();
+        mAutoTask.start();
     }
 
     @Override
@@ -254,9 +257,9 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
     @Override
     public void onLoadMore() {
         // 加载更多数据
-        if (mUrl!=null){
+        if (mUrl != null) {
             getMoreDataFromServer();
-        }else {
+        } else {
             mLvInfo.onRefreshComplete(true);
             Toast.makeText(mContext, "没有更多数据了", Toast.LENGTH_SHORT)
                     .show();
@@ -267,7 +270,7 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
 
         @Override
         public void run() {
-            int currentItem  = mViewPager.getCurrentItem();
+            int currentItem = mViewPager.getCurrentItem();
             if (currentItem == mViewPager.getAdapter().getCount() - 1) {
                 mViewPager.setCurrentItem(0);
             } else {
@@ -305,20 +308,6 @@ public class NewsListController extends BaseController implements ViewPager.OnPa
         }
         return false;
     }
-    /**
-     * 设置侧边栏可用不可用
-     *
-     * @param enable
-     */
-    private void setSlidingMenuEnable(boolean enable) {
-        HomeActivity mainUI = (HomeActivity) mContext;
-        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
 
-        if (enable) {
-            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        } else {
-            // 禁用掉侧边栏滑动效果
-            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-        }
-    }
+
 }

@@ -83,11 +83,29 @@ public class MenuNewsController extends BaseController implements ViewPager.OnPa
 
     @Override
     public void onPageSelected(int position) {
-        HomeActivity homeActivity = (HomeActivity) mContext;
-        SlidingMenu slidingMenu = homeActivity.getSlidingMenu();
-        slidingMenu.setTouchModeAbove(position == 0 ?
-                SlidingMenu.TOUCHMODE_FULLSCREEN :
-                SlidingMenu.TOUCHMODE_NONE);
+        if (position == 0) {// 在第一个页签,允许侧边栏出现
+            // 开启侧边栏
+            setSlidingMenuEnable(true);
+        } else {// 其他页签,禁用侧边栏, 保证viewpager可以正常向右滑动
+            // 关闭侧边栏
+            setSlidingMenuEnable(false);
+        }
+    }
+    /**
+     * 设置侧边栏可用不可用
+     *
+     * @param enable
+     */
+    private void setSlidingMenuEnable(boolean enable) {
+        HomeActivity mainUI = (HomeActivity) mContext;
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+
+        if (enable) {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            // 禁用掉侧边栏滑动效果
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
     }
 
     @Override

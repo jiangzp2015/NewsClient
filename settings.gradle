@@ -1,2 +1,2 @@
-include ':app', ':Slidinglibrary'
+include ':app', ':Slidinglibrary', ':ptr-lib'
 include ':Vpilibrary'
