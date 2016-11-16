@@ -17,11 +17,11 @@ import java.util.List;
 public class MenuNewsAdapter extends PagerAdapter {
 
     private List<BaseController> mList;
-    private List<NewsCenterBean.ChildBean> mtitle;
+    private List<NewsCenterBean.ChildBean> mList1;
 
     public MenuNewsAdapter(List<BaseController> list,List<NewsCenterBean.ChildBean> titles) {
         this.mList = list;
-        this.mtitle =titles;
+        this.mList1 =titles;
     }
 
     @Override
@@ -51,6 +51,6 @@ public class MenuNewsAdapter extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        return mtitle.get(position).title;
+        return mList1.get(position).title;
     }
 }

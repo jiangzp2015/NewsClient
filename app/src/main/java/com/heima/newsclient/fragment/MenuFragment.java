@@ -37,6 +37,7 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
         initData();
         initListener();
         return mView;
+
     }
     public void initView(){
         mLvMenu = (ListView) mView.findViewById(R.id.lv_menu);
@@ -62,19 +63,18 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
         mAdapter.setSelect(position);
         mAdapter.notifyDataSetChanged();
 
-/*        ContentFragment contentFragment=homeActivity.getContentFragment();
+        ContentFragment contentFragment=homeActivity.getContentFragment();
         contentFragment.switchMenu(position);
-        */
-        if (mListener!=null){
+/*        if (mListener!=null){
             mListener.onClickItem(position);
-        }
+        }*/
     }
-
+/*
     public interface onClickItemListener{
         void onClickItem(int position);
     }
     onClickItemListener mListener;
     public void setOnClickItemListener(onClickItemListener listener){
         mListener=listener;
-    }
+    }*/
 }

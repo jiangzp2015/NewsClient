@@ -35,7 +35,7 @@ import static com.android.volley.VolleyLog.TAG;
  * @describe 新闻页面的控制器
  */
 
-public class NewsController extends TabController implements MenuFragment.onClickItemListener {
+public class NewsController extends TabController {
     private NewsCenterBean mNewsCenterBean;
     private FrameLayout mContainer;
     private List<BaseController> mMenuControllerList;
@@ -88,7 +88,7 @@ public class NewsController extends TabController implements MenuFragment.onClic
         MenuFragment menuFragment = activity.getMenuFragment();
         menuFragment.setData(mNewsCenterBean.data);
         //接口回调
-        menuFragment.setOnClickItemListener(this);
+//        menuFragment.setOnClickItemListener(this);
     }
 
     /**
@@ -132,8 +132,8 @@ public class NewsController extends TabController implements MenuFragment.onClic
     }
 
 
-    @Override
+/*    @Override
     public void onClickItem(int position) {
         setSwitchMenu(position);
-    }
+    }*/
 }

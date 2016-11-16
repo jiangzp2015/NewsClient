@@ -25,6 +25,7 @@ public class MenuAdapter extends BaseAdapter {
     private int mSelectPosition;
     public MenuAdapter(Context context, List<NewsCenterBean.DataBean> dataBeanList) {
         mContext = context;
+
         mDataBeanList = dataBeanList;
 
     }

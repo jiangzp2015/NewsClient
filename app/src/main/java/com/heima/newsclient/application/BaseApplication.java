@@ -24,7 +24,7 @@ public class BaseApplication extends Application {
 
 
     }
-    public static BaseApplication getmContext(){
+    public static BaseApplication getContext(){
         return mContext;
     }
     public static Handler getMainThreadHandler(){

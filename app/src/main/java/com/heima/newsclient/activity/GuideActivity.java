@@ -122,7 +122,10 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         startActivity(new Intent(GuideActivity.this, HomeActivity.class));
         finish();
         PrefUtils.putBoolean(this,true, Constant.KEY_FINISH_GUIDE);
+
     }
+
+
 
 
 }

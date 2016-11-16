@@ -17,7 +17,6 @@ import com.heima.newsclient.control.tab.HomeController;
 import com.heima.newsclient.control.tab.NewsController;
 import com.heima.newsclient.control.tab.SettingController;
 import com.heima.newsclient.control.tab.SmartServiceController;
-import com.heima.newsclient.utils.UIUtils;
 import com.heima.newsclient.view.LazyViewPager;
 
 import java.util.ArrayList;
@@ -39,8 +38,7 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView= UIUtils.inflate(R.layout.fragment_content);
-//        mView = inflater.inflate(R.layout.fragment_content, null);
+        mView = inflater.inflate(R.layout.fragment_content, null);
         initView();
         initData();
         initListener();
@@ -96,4 +94,5 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
         BaseController controller=mList.get(mViewPagerContent.getCurrentItem());
         controller.setSwitchMenu(position);
     }
+
 }

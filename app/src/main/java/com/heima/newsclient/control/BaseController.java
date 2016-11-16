@@ -30,5 +30,6 @@ public abstract class BaseController {
      * @param position
      */
     public void setSwitchMenu(int position) {
+
     }
 }

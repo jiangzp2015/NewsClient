@@ -8,7 +8,7 @@ package com.heima.newsclient.global;
 public interface Constant {
 
     //服务器地址
-    String URL_ROOT="http://192.168.29.98:8080/zhbj";
+    String URL_ROOT="http://192.168.29.98:8080/zhbj_v2";
     //新闻信息的地址
     String URL_NEWS=URL_ROOT+"/categories.json";
 

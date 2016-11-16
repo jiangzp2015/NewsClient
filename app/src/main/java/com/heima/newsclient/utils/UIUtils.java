@@ -20,7 +20,7 @@ import com.heima.newsclient.application.BaseApplication;
 
 public class UIUtils {
     public static Context getContext() {
-        return BaseApplication.getmContext();
+        return BaseApplication.getContext();
     }
 
     public static Handler getHandler() {

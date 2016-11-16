@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+    <com.heima.newsclient.view.TopNewsPager
+        android:id="@+id/viewpager_top"
+        android:layout_width="match_parent"
+        android:layout_height="160dp">
+    </com.heima.newsclient.view.TopNewsPager>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#33000000"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        >
+        <TextView
+            android:id="@+id/tv_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="中秋赏月"
+            android:textColor="#ffffff"
+            android:textSize="12sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
