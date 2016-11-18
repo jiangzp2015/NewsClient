@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Process;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
@@ -81,7 +82,7 @@ public class UIUtils {
         return getResources().getColor(resId,getContext().getTheme());
     }
     //判断当前是否为主线程
-    public static boolean isRunOnMainThread(){
+    public static boolean isRunOnUIThread(){
         int myTid = Process.myTid();
         if (myTid==getMainThreadId()){
             return true;
@@ -89,8 +90,8 @@ public class UIUtils {
         return false;
     }
     //UI线程运行
-    public static void runOnMainThread(Runnable runnable){
-        if (isRunOnMainThread()){
+    public static void runOnUIThread(Runnable runnable){
+        if (isRunOnUIThread()){
             //如果主 直接运行
             runnable.run();
         }else {
@@ -107,6 +108,10 @@ public class UIUtils {
         float density = getContext().getResources().getDisplayMetrics().density;
         float dp= px/density;
         return dp;
+    }
+    //判断是否为当前线程
+    public static boolean isMain() {
+        return Looper.getMainLooper().getThread() == Thread.currentThread();
     }
 
 }

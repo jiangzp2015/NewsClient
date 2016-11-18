@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.heima.newsclient.R;
+import com.heima.newsclient.activity.HomeActivity;
 import com.heima.newsclient.adapter.ContentAdapter;
 import com.heima.newsclient.control.BaseController;
 import com.heima.newsclient.control.TabController;
@@ -18,6 +19,7 @@ import com.heima.newsclient.control.tab.NewsController;
 import com.heima.newsclient.control.tab.SettingController;
 import com.heima.newsclient.control.tab.SmartServiceController;
 import com.heima.newsclient.view.LazyViewPager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
     }
 
     public void initData() {
+        //定义集合，里面存储控制器
         mList = new ArrayList<>();
         mList.add(new HomeController(getActivity()));
         mList.add(new NewsController(getActivity()));
@@ -61,8 +64,9 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
 
         ContentAdapter adapter = new ContentAdapter(mList);
         mViewPagerContent.setAdapter(adapter);
-
+        //用于控制viewPager 保留几个界面，相邻 ，默认是1.
         mViewPagerContent.setOffscreenPageLimit(0);
+        setSlidingMenuEnable(false);
     }
 
     public void initListener() {
@@ -73,19 +77,24 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_content:
-                mViewPagerContent.setCurrentItem(0);
+                mViewPagerContent.setCurrentItem(0, false);// 禁用页面切换的动画效果
+                setSlidingMenuEnable(false);
                 break;
             case R.id.rb_news:
-                mViewPagerContent.setCurrentItem(1);
+                mViewPagerContent.setCurrentItem(1,false);
+                setSlidingMenuEnable(true);
                 break;
             case R.id.rb_smart:
-                mViewPagerContent.setCurrentItem(2);
+                mViewPagerContent.setCurrentItem(2,false);
+                setSlidingMenuEnable(true);
                 break;
             case R.id.rb_gov:
-                mViewPagerContent.setCurrentItem(3);
+                mViewPagerContent.setCurrentItem(3,false);
+                setSlidingMenuEnable(true);
                 break;
             case R.id.rb_setting:
-                mViewPagerContent.setCurrentItem(4);
+                mViewPagerContent.setCurrentItem(4,false);
+                setSlidingMenuEnable(false);
                 break;
 
         }
@@ -93,6 +102,21 @@ public class ContentFragment extends Fragment implements RadioGroup.OnCheckedCha
     public void switchMenu(int position){
         BaseController controller=mList.get(mViewPagerContent.getCurrentItem());
         controller.setSwitchMenu(position);
+    }
+    /**
+     * 设置侧边栏可用不可用
+     *
+     * @param enable
+     */
+    private void setSlidingMenuEnable(boolean enable) {
+        HomeActivity mainUI = (HomeActivity) getActivity();
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+        if (enable) {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            // 禁用掉侧边栏滑动效果
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
     }
 
 }

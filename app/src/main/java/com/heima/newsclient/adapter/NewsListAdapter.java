@@ -34,8 +34,8 @@ public class NewsListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public NewsListBean.DataBean.NewsBean getItem(int position) {
+        return mList.get(position);
     }
 
     @Override
@@ -66,6 +66,14 @@ public class NewsListAdapter extends BaseAdapter{
 
     public void setData(List<NewsListBean.DataBean.NewsBean> list) {
         mList = list;
+    }
+
+    /**
+     * 累加处理数据
+     * @param list
+     */
+    public void addData(List<NewsListBean.DataBean.NewsBean> list) {
+        mList.addAll(list);
     }
 
     static class ViewHolder{

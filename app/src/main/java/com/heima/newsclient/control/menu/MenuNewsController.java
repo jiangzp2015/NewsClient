@@ -27,7 +27,6 @@ import static com.heima.newsclient.R.layout.controller_menu_news;
 
 public class MenuNewsController extends BaseController implements ViewPager.OnPageChangeListener, View.OnClickListener, SlidingMenu.OnOpenedListener, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener, SlidingMenu.OnClosedListener {
 
-
     private static final String TAG = "MenuNewsController";
     private ViewPager mViewPager;
     private TabPageIndicator mIndicator;

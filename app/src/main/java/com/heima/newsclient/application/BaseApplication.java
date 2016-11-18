@@ -3,6 +3,9 @@ package com.heima.newsclient.application;
 import android.app.Application;
 import android.os.Handler;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
 /**
  * @author SparkJzp
  * @date 2016/11/13
@@ -12,16 +15,17 @@ import android.os.Handler;
 public class BaseApplication extends Application {
     private static BaseApplication mContext;
     private static Handler mMainThreadHandler;
+    private static RequestQueue mQueue;
     private static Thread mMainThread;
     private static int mMainThreadId;
     @Override
     public void onCreate() {
         super.onCreate();
         this.mContext=this;
+        mQueue= Volley.newRequestQueue(getApplicationContext());
         this.mMainThreadHandler=new Handler();
         this.mMainThread=Thread.currentThread();
         this.mMainThreadId=android.os.Process.myTid();
-
 
     }
     public static BaseApplication getContext(){
@@ -35,5 +39,8 @@ public class BaseApplication extends Application {
     }
     public static int getMainThreadId(){
         return mMainThreadId;
+    }
+    public static RequestQueue getRequestQueue(){
+        return mQueue;
     }
 }

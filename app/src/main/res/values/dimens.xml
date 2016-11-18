@@ -5,4 +5,5 @@
     <dimen name="point_size">12dp</dimen>
     <dimen name="point_top_size">8dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
+    <dimen name="text_size_12sp">12dp</dimen>
 </resources>

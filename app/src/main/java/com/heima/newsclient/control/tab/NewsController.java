@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.heima.newsclient.R;
 import com.heima.newsclient.activity.HomeActivity;
 import com.heima.newsclient.control.BaseController;
 import com.heima.newsclient.control.TabController;
@@ -23,6 +24,7 @@ import com.heima.newsclient.control.menu.MenuSubjectController;
 import com.heima.newsclient.entity.NewsCenterBean;
 import com.heima.newsclient.fragment.MenuFragment;
 import com.heima.newsclient.global.Constant;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +34,11 @@ import static com.android.volley.VolleyLog.TAG;
 /**
  * @author SparkJzp
  * @date 2016/11/12
- * @describe 新闻页面的控制器
+ * @describe 这是新闻中心的控制器， 有关首页的逻辑代码，都在这里写
+ *             该类必须对外提供 首页要显示的视图 ， 以及操作数据的方法
  */
 
-public class NewsController extends TabController {
+public class NewsController extends TabController implements View.OnClickListener {
     private NewsCenterBean mNewsCenterBean;
     private FrameLayout mContainer;
     private List<BaseController> mMenuControllerList;
@@ -53,6 +56,8 @@ public class NewsController extends TabController {
     @Override
     public void initData() {
         mTvTitle.setText("新闻中心");
+        mIvLeft.setOnClickListener(this);
+        mIvRight.setOnClickListener(this);
         Log.d(TAG, "onResponse:+++++++++ " + "从网络下载数据");
         //        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
@@ -98,6 +103,23 @@ public class NewsController extends TabController {
     public void setSwitchMenu(int position) {
         mContainer.removeAllViews();
         BaseController controller=mMenuControllerList.get(position);
+        if (controller instanceof MenuPicController){
+            mTvTitle.setText("组图");
+            mIvLeft.setVisibility(View.VISIBLE);
+            mIvRight.setVisibility(View.VISIBLE);
+        }else if (controller instanceof MenuNewsController){
+            mTvTitle.setText("新闻");
+            mIvLeft.setVisibility(View.VISIBLE);
+            mIvRight.setVisibility(View.GONE);
+        }else if (controller instanceof MenuSubjectController){
+            mTvTitle.setText("专题");
+            mIvLeft.setVisibility(View.GONE);
+            mIvRight.setVisibility(View.GONE);
+        }else if (controller instanceof MenuInteractController){
+            mTvTitle.setText("互动");
+            mIvLeft.setVisibility(View.GONE);
+            mIvRight.setVisibility(View.GONE);
+        }
         View rootView = controller.getRootView();
         mContainer.addView(rootView);
         controller.initData();
@@ -131,9 +153,31 @@ public class NewsController extends TabController {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_left:
+                HomeActivity activity= (HomeActivity) mContext;
+                SlidingMenu slidingMenu = activity.getSlidingMenu();
+                slidingMenu.toggle();
+                break;
+            case R.id.iv_right: //点击右边
 
-/*    @Override
-    public void onClickItem(int position) {
-        setSwitchMenu(position);
-    }*/
+                MenuPicController controller = (MenuPicController) mMenuControllerList.get(2);
+
+                if(controller.isListShow()){
+                    //如果现在显示的是listView
+                    controller.showGird();
+                    mIvRight.setImageResource(R.drawable.icon_pic_list_type);
+                }else{
+
+                    //如果现在显示的是listview
+                    controller.showList();
+                    mIvRight.setImageResource(R.drawable.icon_pic_grid_type);
+                }
+
+                break;
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package com.heima.newsclient.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,10 +23,10 @@ import java.util.Date;
 /**
  * @author SparkJzp
  * @date 2016/11/16
- * @describe TODO
+ * @describe 自定义ListView  可下拉刷新
  */
 
-public class PullToRefreshListView extends ListView implements AbsListView.OnScrollListener,android.widget.AdapterView.OnItemClickListener {
+public class PullToRefreshListView extends ListView implements AbsListView.OnScrollListener, android.widget.AdapterView.OnItemClickListener {
     private static final String TAG = "PullToRefreshListView";
     private ImageView mIvArr;
     private ProgressBar mProgressBar;
@@ -56,18 +57,37 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
     }
 
     /**
+     * 初始化布局
+     */
+    private void init() {
+        mHeaderView = LayoutInflater.from(getContext()).inflate(R.layout.list_refresh_header, null);
+        mFooterView = View.inflate(getContext(), R.layout.list_refresh_footer, null);
+        mIvArr = (ImageView) mHeaderView.findViewById(R.id.iv_arr);
+        mProgressBar = (ProgressBar) mHeaderView.findViewById(R.id.progressbar);
+        mTvTime = (TextView) mHeaderView.findViewById(R.id.tv_time);
+        mTvLabel = (TextView) mHeaderView.findViewById(R.id.tv_label);
+    }
+
+    /**
      * 初始化底部View
      */
     private void initFooterView() {
-        mFooterView = View.inflate(getContext(), R.layout.list_refresh_footer, null);
+
         this.addFooterView(mFooterView);
-        mFooterView.measure(0,0);
+        //相对布局使用这行代码 会报空指针
+        mFooterView.measure(0, 0);
         mFooterHeight = mFooterView.getMeasuredHeight();
+        Log.d(TAG, "initFooterView: " + mFooterHeight);
         //隐藏脚布局
-        mFooterView.setPadding(0,-mFooterHeight,0,0);
+        setFooterPadding(-mFooterHeight);
         //设置滑动监听
         this.setOnScrollListener(this);
     }
+
+    private void setFooterPadding(int padding) {
+        mFooterView.setPadding(0, padding, 0, 0);
+    }
+
 
     /**
      * 初始化头部View
@@ -128,7 +148,7 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
                     mHeaderView.setPadding(0, 0, 0, 0);
                     refreshState();
                     // 下拉刷新回调
-                    if (mListener!=null){
+                    if (mListener != null) {
                         mListener.onRefresh();
                     }
                 } else if (mCurrentState == STATE_PULL_TO_REFRESH) {
@@ -191,38 +211,37 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
         mDownAnimation.setFillAfter(true);
     }
 
-    /**
-     * 初始化布局
-     */
-    private void init() {
-        mHeaderView = LayoutInflater.from(getContext()).inflate(R.layout.list_refresh_header, null);
-        mIvArr = (ImageView) mHeaderView.findViewById(R.id.iv_arr);
-        mProgressBar = (ProgressBar) mHeaderView.findViewById(R.id.progressbar);
-        mTvTime = (TextView) mHeaderView.findViewById(R.id.tv_time);
-        mTvLabel = (TextView) mHeaderView.findViewById(R.id.tv_label);
-    }
 
     //定义接口 对刷新的回调
     private OnRefreshListener mListener;
 
-    public void setOnRefreshListener(OnRefreshListener listener){
-        mListener=listener;
+    public void setOnRefreshListener(OnRefreshListener listener) {
+        mListener = listener;
     }
+
+    public interface OnRefreshListener {
+        //下拉刷新
+         void onRefresh();
+
+        //加载更多
+         void onLoadMore();
+    }
+
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState==SCROLL_STATE_IDLE){
-            int lastVisiblePosition=getLastVisiblePosition();
-            if (lastVisiblePosition>getCount()-1 && !isLoadingMore){
-                isLoadingMore=true;
-                //展现脚布局
-                mFooterView.setPadding(0,0,0,0);
-                //listview设置当前要展示的item的位置
-                setSelection(getCount()-1);
-                if (mListener !=null){
-                    mListener.onLoadMore();
-                }
 
+        Log.d(TAG, "getLastVisiblePosition" + getLastVisiblePosition());
+        int lastVisiblePosition = getLastVisiblePosition();
+        Log.d(TAG, "lastVisiblePosition" + lastVisiblePosition);
+        if (scrollState == SCROLL_STATE_IDLE && lastVisiblePosition == getAdapter().getCount() - 1) {
+            isLoadingMore = true;
+            //展现脚布局
+            setFooterPadding(0);
+            //listview设置当前要展示的item的位置
+            setSelection(getCount() - 1);
+            if (mListener != null) {
+                mListener.onLoadMore();
             }
 
         }
@@ -233,28 +252,20 @@ public class PullToRefreshListView extends ListView implements AbsListView.OnScr
 
     }
 
-    public interface OnRefreshListener{
-        //下拉刷新
-        public void onRefresh();
-        //加载更多
-        public void onLoadMore();
-    }
-
     // 刷新完成
-    public void onRefreshComplete(boolean success){
-        if (!isLoadingMore){
-            mHeaderView.setPadding(0,-mHeaderHeight,0,0);
-            mCurrentState=STATE_PULL_TO_REFRESH;
+    public void onRefreshComplete(boolean success) {
+        if (!isLoadingMore) {
+            mHeaderView.setPadding(0, -mHeaderHeight, 0, 0);
+            mCurrentState = STATE_PULL_TO_REFRESH;
             mProgressBar.setVisibility(View.INVISIBLE);
             mIvArr.setVisibility(View.VISIBLE);
             mTvLabel.setText("下拉刷新");
-
-            if (success){
+            if (success) {
                 setCurrentTime();
             }
-        }else {
+        } else {
             //隐藏脚布局
-            mFooterView.setPadding(0, -mFooterHeight, 0, 0);
+            setFooterPadding(-mFooterHeight);
             isLoadingMore = false;
         }
     }
